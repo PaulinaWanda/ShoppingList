@@ -46,12 +46,11 @@
         document.body.appendChild(modal);
         modal.classList.add("pop-up-modal");
         modal.innerHTML = "<form id='email-form' class='email-form'>" +
-            "<label for='email-input'>" +
+            "<label for='email-input'>Recepient's e-mail address</label>" +
             "<input type='email' id='email-input' class='email-input' placeholder='e-mail address' size='35' required>" +
-            "</label>" +
-            "<label for='email-message'>" +
+            "<label for='email-message'>Text message max 100 characters</label>" +
             "<textarea id='email-message' class='email-message' placeholder='Write a short message' maxlength='100' rows='4'>" +
-            "</textarea></label>" +
+            "</textarea>" +
             "<button type='submit' class='submit-button'>Send message</button>" +
             "</form>" +
             "<button type='button' class='close'>X</button>";
@@ -102,7 +101,7 @@
             emailMessage = document.getElementById("email-message").value;
             emailContent = emailMessage ? (emailMessage + "\n" + emailContent) : emailContent;
 
-            window.location.href = "mailto:" + emailAddress + "?subject=Shopping list from " + day + "." +
+            window.location.href = "mailto:" + emailAddress + "?subject=Shopping list of " + day + "." +
                 month + " " + hour + ":" + minutes + "&body=" + encodeURIComponent(emailContent);
             closeModal();
 

@@ -1,5 +1,17 @@
 body {
     background-color: #456789;
+    font-family: Helvetica, sans-serif;
+    font-size: 16px;
+}
+label {
+    font-size: 12px;
+    color: #000123;
+    display: block;
+    padding: 25px 0 5px;
+}
+
+input {
+    padding: 5px 0;
 }
 /** -- wrapper -- **/
 .wrapper {
@@ -8,26 +20,30 @@ body {
     padding: 25px;
     border: 1px solid #123456;
     border-radius: 12px;
-    width: 40%;
-    font-family: Helvetica, sans-serif;
-    font-size: 16px;
+    width: 80%;
+}
+.wrapper h1 {
+    text-align: center;
 }
 .input-form {
-    text-align: center;
+    margin: 0 25px;
 }
 #name-input {
     width: 75%;
+    width: calc(100% - 83px);
+}
+.name-list {
+    margin-top: 25px;
 }
 .name-list li{
     padding: 10px;
     border-bottom: 1px solid #6789ab;
-
 }
 .name-list li:last-child {
     border-bottom: none;
 }
 /** -- buttons -- **/
-.name-button, .remove-btn, .send-btn {
+.name-button, .remove-btn, .send-btn, .submit-button {
     padding: 5px;
     font-weight: 600;
 }
@@ -44,7 +60,10 @@ body {
     display: block;
     margin: auto;
 }
- /** -- modal -- **/
+.submit-button {
+    margin-top: 25px;
+}
+/** -- modal -- **/
 .modal-overlay {
     background-color: rgb(10, 10, 10);
     position: fixed;
@@ -109,7 +128,8 @@ body {
     transition: opacity 1.5s ease-in-out ;
 }
 .pop-up-modal.modal-open {
-    height: 200px;
+    height: auto;
+    padding: 50px 0;
     opacity: 1;
     top: 50%;
 
@@ -124,13 +144,28 @@ body {
     flex-flow: column wrap;
     justify-content: center;
     align-items: flex-end;
+
 }
 .email-input {
 
 }
 .email-message {
-
+    font-family: Helvetica, sans-serif;
+    font-size: 16px;
+    border-radius: 2px;
 }
-.submit-button {
 
+/** -- drag&drop -- **/
+[draggable] {
+    cursor: move;
+}
+.dragged {
+    opacity: 0.5;
+    background: #123456;
+}
+.over {
+    background: #345678;
+    -webkit-box-shadow: inset 1px 1px 2px #6789ab;
+    -moz-box-shadow: inset 1px 1px 2px #6789ab;
+    box-shadow: inset 1px 1px 2px #6789ab;
 }

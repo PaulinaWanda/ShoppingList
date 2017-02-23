@@ -17,6 +17,7 @@
             removeBtn.textContent = "Remove name";
             li.appendChild(text);
             li.appendChild(removeBtn);
+            li.setAttribute("draggable", "true");
             nameList.appendChild(li);
             nameInput.value = "";
             nameInput.focus();
@@ -29,6 +30,60 @@
             nameInput.focus();
         }
     }, false);
+
+    /* Drag & Drop start*/
+    var dropTarget = null;
+
+    nameList. addEventListener("dragstart", function (event) {
+        if (event.target.tagName === "LI") {
+            dropTarget = event.target;
+
+            dropTarget.classList.add("dragged");
+
+            event.dataTransfer.effectAllowed = "move";
+            event.dataTransfer.setData("txt/html", dropTarget.innerHTML);
+        }
+    }, false);
+
+    nameList.addEventListener("dragenter", function (event) {
+        if (event.target.tagName === "LI") {
+            event.target.classList.add("over");
+        }
+    }, false);
+
+    nameList.addEventListener("dragover", function (event) {
+        if (event.preventDefault) {
+            event.preventDefault();
+        }
+    }, false);
+
+    nameList.addEventListener("dragleave", function (event) {
+        if (event.target.tagName === "LI") {
+            event.target.classList.remove("over");
+        }
+    }, false);
+
+    nameList.addEventListener("dragend", function () {
+        document.querySelectorAll(".name-list li").forEach(function (li) {
+            li.classList.remove("over", "dragged");
+        });
+
+    }, false);
+
+    nameList. addEventListener("drop", function (event) {
+        if (event.stopPropagation) {
+            event.stopPropagation();
+        }
+
+        if (dropTarget !== event.target) {
+
+            dropTarget.innerHTML = event.target.innerHTML;
+            event.target.innerHTML = event.dataTransfer.getData("txt/html");
+
+        }
+        return false;
+    }, false);
+    /* Drag & Drop stop*/
 
 
     nameInput.addEventListener("keydown", function checkEnterKey(pressedKey) {
@@ -46,11 +101,11 @@
         document.body.appendChild(modal);
         modal.classList.add("pop-up-modal");
         modal.innerHTML = "<form id='email-form' class='email-form'>" +
-            "<label for='email-input'>Recepient's e-mail address</label>" +
-            "<input type='email' id='email-input' class='email-input' placeholder='e-mail address' size='35' required>" +
-            "<label for='email-message'>Text message max 100 characters</label>" +
-            "<textarea id='email-message' class='email-message' placeholder='Write a short message' maxlength='100' rows='4'>" +
-            "</textarea>" +
+            "<label for='email-input'>Receipient's e-mail address</label>" +
+            "<input type='email' id='email-input' class='email-input' placeholder='buy@me.food' size='35' required>" +
+            "<label for='email-message'>Your message up to 100 characters</label>" +
+            "<textarea id='email-message' class='email-message' placeholder='S.O.S Help! I am starving!' " +
+            "maxlength='100' rows='4' cols='30'></textarea>" +
             "<button type='submit' class='submit-button'>Send message</button>" +
             "</form>" +
             "<button type='button' class='close'>X</button>";

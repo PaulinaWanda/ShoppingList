@@ -1,19 +1,21 @@
 (function () {
-    var nameButton = document.querySelector(".name-button");
-    var nameInput = document.getElementById("name-input");
-    var nameList = document.querySelector(".name-list");
-    var sendButton = document.querySelector(".send-btn");
-    var modal;
-    var overlay;
+    var nameButton = document.querySelector(".name-button"),
+    nameInput = document.getElementById("name-input"),
+    nameList = document.querySelector(".name-list"),
+    dropTarget = null,
+    sendButton = document.querySelector(".send-btn"),
+    modal,
+    overlay;
 
     //Event listeners
 
-    nameButton.addEventListener("click", function add() {
+    nameButton.addEventListener("click", function () {
         if (nameInput.value) {
-            var text = document.createTextNode(nameInput.value);
-            var li = document.createElement("li");
-            var removeBtn = document.createElement("button");
-            removeBtn.className = "remove-btn";
+            var text = document.createTextNode(nameInput.value),
+            li = document.createElement("li"),
+            removeBtn = document.createElement("button");
+
+            removeBtn.classList.add("remove-btn");
             removeBtn.textContent = "Remove name";
             li.appendChild(text);
             li.appendChild(removeBtn);
@@ -24,7 +26,7 @@
         }
     }, false);
 
-    nameList.addEventListener("click", function remove(event) {
+    nameList.addEventListener("click", function (event) {
         if (event.target.className === "remove-btn") {
             nameList.removeChild(event.target.parentNode);
             nameInput.focus();
@@ -32,8 +34,6 @@
     }, false);
 
     /* Drag & Drop start*/
-    var dropTarget = null;
-
     nameList. addEventListener("dragstart", function (event) {
         if (event.target.tagName === "LI") {
             dropTarget = event.target;
@@ -121,22 +121,19 @@
             }
         }, false);
 
-        var emailForm = document.getElementById("email-form");
+        var emailForm = document.getElementById("email-form"),
+        now,
+        day,
+        month,
+        hour,
+        minutes,
+        emailAddress,
+        emailContent = nameList.innerText,
+        removeName = document.querySelector(".remove-btn").textContent,
+        emailMessage;
 
-        var now;
-        var day;
-        var month;
-        var hour;
-        var minutes;
-
-        var emailAddress;
-        var emailContent = nameList.innerText;
-        var removeName = document.querySelector(".remove-btn").textContent;
         emailContent = emailContent.replace(new RegExp(removeName, 'g'), "\n");
         emailContent = emailContent.replace(/^/gm, "• ");
-
-        var emailMessage;
-
 
         emailForm.addEventListener("submit", function submitList(evt) {
             evt.preventDefault();
@@ -172,14 +169,19 @@
         overlay.classList.remove("modal-open");
         modal.classList.remove("modal-open");
 
-        modal.addEventListener("transitionend", function () {
-            modal.parentNode.removeChild(modal);
+        modal.addEventListener("transitionend", function handler() {
+            this.removeEventListener("transitionend", handler, false);
+            if (this.parentNode) {
+                this.parentNode.removeChild(this);
+            }
         }, false);
-        overlay.addEventListener("transitionend", function () {
-            overlay.parentNode.removeChild(overlay);
+        overlay.addEventListener("transitionend", function handler() {
+            this.removeEventListener("transitionend", handler, false);
+            if (this.parentNode) {
+                this.parentNode.removeChild(this);
+            }
         }, false);
     }
-
     function addZero(num) {
         return (num < 10) ? ("0" + num) : num;
     }
